@@ -31,7 +31,7 @@ class PulseClient(object):
 
         self.worker = Worker()
         self.worker.setIdleCallback(self.onWorkerIdle)
-        self.onWorkerIdle()
+        #self.onWorkerIdle()
         self.worker.start()
 
     def stop(self):
