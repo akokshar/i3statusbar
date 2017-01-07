@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from subprocess import check_output, Popen, PIPE
+from subprocess import Popen
 import pyudev
 from pulsectl import Pulse, PulseLoopStop
 
@@ -22,7 +22,6 @@ class StatusLineVolume(StatusLineSlider):
         self.pulseSinkEventCallback()
 
     def pulseSinkEventCallback(self, **args):
-        Logger.logMessage("pulseSinkEventCallback")
         volume = self.pulseClient.getDefaultSinkVolume()
         self.value = round(volume * 100)
         self.setMuteColor()
@@ -31,10 +30,13 @@ class StatusLineVolume(StatusLineSlider):
         volume = value/100.0
         self.pulseClient.setDefaultSinkVolume(volume)
 
-    def doOnMiddleClick(self, event):
+    def doOnRightClick(self, event):
         mute = self.pulseClient.getDefaultSinkMute()  
         self.pulseClient.setDefaultSinkMute(not mute)
         self.setMuteColor()
+
+    def doOnMiddleClick(self, event):
+        Popen(["/usr/bin/pavucontrol", "--tab", "3"])
 
     def setMuteColor(self):
         if self.pulseClient.getDefaultSinkMute() == True:
