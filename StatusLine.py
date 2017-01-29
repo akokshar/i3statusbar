@@ -51,7 +51,8 @@ class StatusLine(object):
     def processEvent(self, event):
         #Logger.logMessage("click event")
 
-        if not event.has_key("name") or not self.controls.has_key(event["name"]):
+        #if not event.has_key("name") or not self.controls.has_key(event["name"]):
+        if not "name" in event or not event["name"] in self.controls:
             return
 
 

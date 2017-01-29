@@ -16,6 +16,7 @@ class PulseClient(object):
     __metaclass__ = Singleton
 
     def __init__(self):
+        Logger.logMessage("Pulse client init");
         self.pulseCallLock = Lock()
         self.pulseListenLock = Lock()
 

@@ -12,7 +12,7 @@ from PulseClient import PulseClient
 class StatusLineCapture(StatusLineSlider):
 
     def __init__(self):
-        StatusLineSlider.__init__(self, "capture", "🎤")
+        StatusLineSlider.__init__(self, "capture", "")
 
         self.step = 1
 

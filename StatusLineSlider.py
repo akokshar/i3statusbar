@@ -32,7 +32,7 @@ class StatusLineSlider(StatusLineControl):
         for i in range(0, self.lenght + 1):
             slider = StatusLineBlock("•")
             slider.name = name
-            slider.instance = i * 100 / self.lenght
+            slider.instance = int(i * 100 / self.lenght)
             slider.separator = False
             slider.separator_block_width = 3
             self.slider.append(slider)
@@ -108,31 +108,12 @@ class StatusLineSlider(StatusLineControl):
         self.changeValue(self.value + self.step)
 
     def doOnLeftClick(self, event):
-        if event.has_key("instance") and event["instance"] == "label":
-            self.isActive = not self.isActive
-        elif event.has_key("instance") and event["instance"] == "inc":
-            self.changeValue(self.value + self.step)
-        elif event.has_key("instance") and event["instance"] == "dec":
-            self.changeValue(self.value - self.step)
-        else:
-            try:
-                value = int(event["instance"])
-                self.changeValue(value)
-            except:
-                pass
-
-    def doOnClick(self, event):
-        return
-        if event["button"] == 4:
-            self.changeValue(self.value - self.step)
-        elif event["button"] == 5:
-            self.changeValue(self.value + self.step)
-        elif event["button"] == 1:
-            if event.has_key("instance") and event["instance"] == "label":
+        if "instance" in event:
+            if event["instance"] == "label":
                 self.isActive = not self.isActive
-            elif event.has_key("instance") and event["instance"] == "inc":
+            elif event["instance"] == "inc":
                 self.changeValue(self.value + self.step)
-            elif event.has_key("instance") and event["instance"] == "dec":
+            elif event["instance"] == "dec":
                 self.changeValue(self.value - self.step)
             else:
                 try:
@@ -140,6 +121,9 @@ class StatusLineSlider(StatusLineControl):
                     self.changeValue(value)
                 except:
                     pass
+
+    def doOnClick(self, event):
+        return
 
     def doChangeValue(self, newValue):
         pass

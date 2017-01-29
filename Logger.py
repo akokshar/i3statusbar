@@ -3,7 +3,7 @@
 
 class Logger(object):
     
-    log = open("/home/alko/Applications/i3statusbar/status1.log", 'w')  
+    log = open("/home/lex/Applications/i3statusbar/status1.log", 'w')  
 #    worker = Worker()
 
     @staticmethod

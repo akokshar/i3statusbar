@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import signal
@@ -18,8 +18,8 @@ from StatusLineBrightness import StatusLineBrightness
 from StatusLineVolume import StatusLineVolume
 from StatusLineCapture import StatusLineCapture
 
-print '{"version":1,"click_events":true}'
-print '['
+print('{"version":1,"click_events":true}')
+print('[')
 
 def printStatusLine(components):
     stdout.write(json.dumps(components) + ",\n")

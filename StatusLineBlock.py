@@ -32,7 +32,8 @@ class StatusLineBlock(object):
                 pass
 
     def __getAttr(self, name):
-        if self.attr.has_key(name):
+        #if self.attr.has_key(name):
+        if name in self.attr:
             return self.attr[name]
         else:
             return None

@@ -14,7 +14,7 @@ class StatusLineCPU(StatusLineControl):
         StatusLineControl.__init__(self, "cpu")
         self.updateInterval = 5
 
-        self.cpuUsage = StatusLineBlock("CPU -----%")
+        self.cpuUsage = StatusLineBlock(" -----%")
 
         self.scheduleUpdate(0)
   
@@ -42,10 +42,10 @@ class StatusLineCPU(StatusLineControl):
             color = [int(c *255) for c in color]
 
             self.cpuUsage.color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
-            self.cpuUsage.full_text = "CPU {:0>5.2f}%".format(100 - idle)
+            self.cpuUsage.full_text = " {:0>5.2f}%".format(100 - idle)
         else:
             self.cpuUsage.color = "red"
-            self.cpuUsage.full_text = "CPU {:s}".format("-----%")
+            self.cpuUsage.full_text = " {:s}".format("-----%")
 
     def doOnUpdateDone(self):
         self.scheduleUpdate(self.updateInterval)

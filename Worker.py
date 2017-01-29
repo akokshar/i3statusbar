@@ -8,7 +8,8 @@ class Worker(threading.Thread):
 
     def __init__(self, **args):
         threading.Thread.__init__(self)
-        if args.has_key("idleCallBack"):
+        #if args.has_key("idleCallBack"):
+        if "idleCallBack" in args:
             self.idleCallback = args["idleCallback"]
         else:
             self.idleCallback = None
