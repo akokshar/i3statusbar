@@ -42,34 +42,32 @@ class StatusLineControl(object):
 
     @isActive.setter
     def isActive(self, value):
-        if self._isActive == value:
-            return
-        
-        #Logger.logMessage("active.setter")
-        
-        self._isActive = value
-        if self._isActive == True:
-            self.doOnActivate()
+        if value == True:
+            if self.deactivateTimer != None:
+                self.deactivateTimer.cancel()
+            self.deactivateTimer = Timer(self.deactivateTimeout, self.onDeactivateTimeout)
+            self.deactivateTimer.start()
         else:
             if self.deactivateTimer != None:
                 self.deactivateTimer.cancel()
-            self.doOnDeactivate()
+            self.deactivateTimer = None
 
-        self.update()
+        if self._isActive != value:
+            self._isActive = value
+            if self._isActive == True:
+                self.doOnActivate()
+            else:
+                self.doOnDeactivate()
 
     def onDeactivateTimeout(self):
         self.isActive = False
-        self.update()
-        #self.scheduleUpdate(0)
 
     def clicked(self, event):
         #Logger.logMessage("clicked")
-        if self.deactivateTimer != None:
-            self.deactivateTimer.cancel()
-        self.deactivateTimer = Timer(self.deactivateTimeout, self.onDeactivateTimeout)
-        self.deactivateTimer.start()
-
         self.doOnClick(event)
+
+        # prevent changing state when being manipulated
+        self.isActive = self.isActive
 
         if event["button"] == 1:
             self.doOnLeftClick(event)
@@ -107,7 +105,7 @@ class StatusLineControl(object):
         pass
     
     def doOnActivate(self):
-        pass
+        self.update()
 
     def doOnDeactivate(self):
-        pass
+        self.update()

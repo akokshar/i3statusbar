@@ -1,0 +1,10 @@
+Udev for: AC self:BAT0
+Udev for: BAT0 self:BAT0
+do change for: BAT0 self:BAT0
+Udev for: BAT1 self:BAT0
+Udev for: AC self:BAT1
+Udev for: BAT0 self:BAT1
+Udev for: BAT1 self:BAT1
+do change for: BAT1 self:BAT1
+Pulse client init
+Pulse client init

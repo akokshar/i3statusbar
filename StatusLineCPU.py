@@ -38,7 +38,7 @@ class StatusLineCPU(StatusLineControl):
     def doOnUpdate(self):
         idle = self.getCPUIdle()
         if idle != None:
-            color = colorsys.hsv_to_rgb(1.0/360*120*idle/100, 1, 1)
+            color = colorsys.hsv_to_rgb(1.0/360*120*idle/100, 0.5, 0.75)
             color = [int(c *255) for c in color]
 
             self.cpuUsage.color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)

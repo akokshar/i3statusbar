@@ -17,7 +17,8 @@ class StatusLineSlider(StatusLineControl):
         self.label.separator = False
         self.label.separator_block_width = 3
 
-        self.dec = StatusLineBlock("❰")
+        self.dec = StatusLineBlock("<span size='small'>❰</span>")
+        self.dec.markup = "pango"
         self.dec.name = name
         self.dec.instance = "dec"
         self.dec.separator = False
@@ -30,14 +31,16 @@ class StatusLineSlider(StatusLineControl):
         self.lenght = 25
         self.slider = []
         for i in range(0, self.lenght + 1):
-            slider = StatusLineBlock("•")
+            slider = StatusLineBlock("<span size='small'>•</span>")
+            slider.markup = "pango"
             slider.name = name
             slider.instance = int(i * 100 / self.lenght)
             slider.separator = False
             slider.separator_block_width = 3
             self.slider.append(slider)
 
-        self.inc = StatusLineBlock("❱")
+        self.inc = StatusLineBlock("<span size='small'>❱</span>")
+        self.inc.markup = "pango"
         self.inc.name = name
         self.inc.instance = "inc"
 

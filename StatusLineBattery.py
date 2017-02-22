@@ -9,16 +9,16 @@ from Logger import Logger
 from StatusLineControl import StatusLineControl
 from StatusLineBlock import StatusLineBlock
 
-# 🔋
-
 class StatusLineBattery(StatusLineControl):
 
-    def __init__(self):
-        StatusLineControl.__init__(self, "BAT")
-
-        self.bat = {}
-        self.bat["BAT0"] = StatusLineBlock("BAT0 --.--%")
-        self.bat["BAT1"] = StatusLineBlock("🔋 --.--%")
+    def __init__(self, battery):
+        StatusLineControl.__init__(self, battery)
+        
+        self.full = StatusLineBlock("{0} --.--%".format(self.name))
+        self.full.name = self.name
+        
+        self.short = StatusLineBlock(" ")
+        self.short.name = self.name
         
         self.udevCtx = pyudev.Context()
         self.udevMon = pyudev.Monitor.from_netlink(self.udevCtx)
@@ -32,8 +32,10 @@ class StatusLineBattery(StatusLineControl):
   
     @property
     def blocks(self):
-        yield self.bat["BAT0"]
-        yield self.bat["BAT1"]
+        if self.isActive:
+            yield self.full
+        else:
+            yield self.short
 
     def getBatteryCharge(self, device):
         now = device.attributes.asint('energy_now')
@@ -41,15 +43,19 @@ class StatusLineBattery(StatusLineControl):
         return float(now)/full*100
 
     def onUdevEvent(self, device):
-        if device.sys_name == "BAT0" or device.sys_name == "BAT1":
+        Logger.logMessage("Udev for: {0} self:{1}".format(device.sys_name, self.name))
+        if device.sys_name == self.name:
+            Logger.logMessage("do change for: {0} self:{1}".format(device.sys_name, self.name))
             charge = self.getBatteryCharge(device)
-            color = colorsys.hsv_to_rgb(1.0/360*120*(charge)/100, 1, 1)
+            color = colorsys.hsv_to_rgb(1.0/360*120*(charge)/100, 0.5, 0.75)
             color = [int(c *255) for c in color]
-            self.bat[device.sys_name].color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
-            self.bat[device.sys_name].full_text = "{0} {1:.2f}%".format(device.sys_name, charge)
+            self.short.color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
+            self.full.color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
+            self.full.full_text = "{0} {1:.2f}%".format(device.sys_name, charge)
 
-    def doOnUpdate(self):
-        pass
+            self.update()
 
-    def doOnUpdateDone(self):
-        pass
+    def doOnLeftClick(self, event):
+        self.isActive = not self.isActive
+
+

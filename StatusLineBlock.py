@@ -112,3 +112,11 @@ class StatusLineBlock(object):
     @instance.setter
     def instance(self, value):
         self.__setAttr("instance", str(value))
+
+    @property
+    def markup(self):
+        self.__setAttr("markup", value)
+
+    @markup.setter
+    def markup(self, value):
+        self.__setAttr("markup", str(value))

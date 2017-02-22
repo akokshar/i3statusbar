@@ -1,6 +1,6 @@
 # i3statusbar
 
-Python 2.7.12
+python3
 
 pip install pyudev
 
