@@ -29,6 +29,9 @@ class StatusLineControl(object):
         self.doOnUpdateDone()
     
     def refresh(self):
+        """
+        Request a 'refresh' of status line
+        """
         if self.refreshCallback != None:
             self.refreshCallback()
 
@@ -58,6 +61,7 @@ class StatusLineControl(object):
                 self.doOnActivate()
             else:
                 self.doOnDeactivate()
+            self.update()
 
     def onDeactivateTimeout(self):
         self.isActive = False
@@ -105,7 +109,7 @@ class StatusLineControl(object):
         pass
     
     def doOnActivate(self):
-        self.update()
+        pass
 
     def doOnDeactivate(self):
-        self.update()
+        pass

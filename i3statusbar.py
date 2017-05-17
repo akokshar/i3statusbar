@@ -10,6 +10,7 @@ from Logger import Logger
 from StatusLine import StatusLine
 from StatusLineLabel import StatusLineLabel 
 from StatusLineDatetime import StatusLineDatetime
+#from StatusLineLanguage import StatusLineLanguage
 from StatusLineBattery import StatusLineBattery
 from StatusLineAC import StatusLineAC
 from StatusLineCPU import StatusLineCPU
@@ -17,7 +18,7 @@ from StatusLineMemory import StatusLineMemory
 from StatusLineBrightness import StatusLineBrightness
 from StatusLineVolume import StatusLineVolume
 from StatusLineCapture import StatusLineCapture
-from StatusLineNetworkManager import StatusLineNetworkManager
+#from StatusLineNetworkManager import StatusLineNetworkManager
 
 print('{"version":1,"click_events":true}')
 print('[')
@@ -28,7 +29,7 @@ def printStatusLine(components):
     stdout.flush()
 
 line = StatusLine(printStatusLine)
-line.addControl(StatusLineNetworkManager())
+#line.addControl(StatusLineNetworkManager())
 line.addControl(StatusLineMemory())
 line.addControl(StatusLineCPU())
 line.addControl(StatusLineAC())
@@ -37,6 +38,7 @@ line.addControl(StatusLineBattery("BAT1"))
 line.addControl(StatusLineCapture())
 line.addControl(StatusLineVolume())
 line.addControl(StatusLineBrightness())
+#line.addControl(StatusLineLanguage())
 line.addControl(StatusLineDatetime())
 
 running = True

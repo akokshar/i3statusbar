@@ -21,6 +21,11 @@ class StatusLineBlock(object):
     def __init__(self, full_text):
         self.attr = {}
         self.full_text = full_text
+        
+        self.border_top = 0
+        self.border_right = 0
+        self.border_left = 0
+        self.border_bottom = 3
 
     def __setAttr(self, name, value):
         if value is not None:
@@ -120,3 +125,43 @@ class StatusLineBlock(object):
     @markup.setter
     def markup(self, value):
         self.__setAttr("markup", str(value))
+
+    @property
+    def border(self):
+        return self.__getAttr("border")
+
+    @border.setter
+    def border(self, value):
+        self.__setAttr("border", value)
+
+    @property
+    def border_top(self):
+        return self.__getAttr("border_top")
+
+    @border_top.setter
+    def border_top(self, value):
+        self.__setAttr("border_top", value)
+
+    @property
+    def border_right(self):
+        return self.__getAttr("border_right")
+
+    @border.setter
+    def border_right(self, value):
+        self.__setAttr("border_right", value)
+
+    @property
+    def border_left(self):
+        return self.__getAttr("border_left")
+
+    @border.setter
+    def border_left(self, value):
+        self.__setAttr("border_left", value)
+
+    @property
+    def border_bottom(self):
+        return self.__getAttr("border_bottom")
+
+    @border.setter
+    def border_bottom(self, value):
+        self.__setAttr("border_bottom", value)

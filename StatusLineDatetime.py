@@ -13,6 +13,7 @@ class StatusLineDatetime(StatusLineControl):
         StatusLineControl.__init__(self, "datetime")
         self.updateInterval = 15
         self.label = StatusLineBlock("")
+        self.label.border = "#CAD1DB"
         self.scheduleUpdate(0)
   
     @property
@@ -21,7 +22,7 @@ class StatusLineDatetime(StatusLineControl):
 
     def doOnUpdate(self):
         now = datetime.now()
-        self.label.full_text =  now.strftime("%a %d %b %H:%M:%S")
+        self.label.full_text =  now.strftime(" %a %d %b %H:%M ")
         self.label.short_text = now.strftime("%H:%M")
 
     def doOnUpdateDone(self):

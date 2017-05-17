@@ -47,6 +47,8 @@ class StatusLineSlider(StatusLineControl):
         self.percent = StatusLineBlock("0%")
         self.percent.name = name
         self.percent.instance = "label"
+        self.percent.separator = True
+        self.percent.separator_block_width = 13
 
     @property
     def color(self):
@@ -131,3 +133,8 @@ class StatusLineSlider(StatusLineControl):
     def doChangeValue(self, newValue):
         pass
 
+#    def doOnActivate(self):
+#        self.label.separator = False
+
+#    def doOnDeactivate(self):
+#        self.label.separator = True

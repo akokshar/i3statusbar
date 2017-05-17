@@ -47,10 +47,10 @@ class StatusLineBattery(StatusLineControl):
         if device.sys_name == self.name:
             Logger.logMessage("do change for: {0} self:{1}".format(device.sys_name, self.name))
             charge = self.getBatteryCharge(device)
-            color = colorsys.hsv_to_rgb(1.0/360*120*(charge)/100, 0.5, 0.75)
-            color = [int(c *255) for c in color]
-            self.short.color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
-            self.full.color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
+            color = [int(c *255) for c in colorsys.hsv_to_rgb(1.0/360*120*(charge)/100, 0.5, 0.75)]
+            color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
+            self.short.border = color
+            self.full.border = color
             self.full.full_text = "{0} {1:.2f}%".format(device.sys_name, charge)
 
             self.update()

@@ -16,10 +16,6 @@ class StatusLineNetworkManager(StatusLineControl):
 
     @property
     def blocks(self):
-        if self.isActive:
-            self.wifiLabel.full_text = NetworkManager.const('state', NetworkManager.NetworkManager.State)
-        else:
-            self.wifiLabel.full_text = " "
         yield self.wifiLabel
 
     def onStateChange(self):
@@ -29,6 +25,12 @@ class StatusLineNetworkManager(StatusLineControl):
     def doOnLeftClick(self, event):
         self.isActive = not self.isActive
 
+    def doOnActivate(self):
+        self.wifiLabel.full_text = NetworkManager.const('state', NetworkManager.NetworkManager.State)
+
+    def doOnDeactivate(self):
+        self.wifiLabel.full_text = " "
+    
 
 """
 
