@@ -17,7 +17,7 @@ class StatusLineBattery(StatusLineControl):
         self.full = StatusLineBlock("{0} --.--%".format(self.name))
         self.full.name = self.name
         
-        self.short = StatusLineBlock(" ")
+        self.short = StatusLineBlock("   ")
         self.short.name = self.name
         
         self.udevCtx = pyudev.Context()
@@ -51,7 +51,7 @@ class StatusLineBattery(StatusLineControl):
             color = "#{0[0]:0>2x}{0[1]:0>2x}{0[2]:0>2x}".format(color)
             self.short.border = color
             self.full.border = color
-            self.full.full_text = "{0} {1:.2f}%".format(device.sys_name, charge)
+            self.full.full_text = " {0} {1:.2f}% ".format(device.sys_name, charge)
 
             self.update()
 

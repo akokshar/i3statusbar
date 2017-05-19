@@ -16,6 +16,8 @@ class StatusLineVolume(StatusLineSlider):
 
         self.step = 1
 
+        self.border = "#ae95c7"
+
         self.pulseClient = PulseClient()
         self.pulseClient.setSinkEventCallback(self.pulseSinkEventCallback)
         self.pulseClient.setDefaultSinkMute(True)

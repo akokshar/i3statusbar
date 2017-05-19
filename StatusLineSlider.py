@@ -11,18 +11,22 @@ class StatusLineSlider(StatusLineControl):
     def __init__(self, name, label):
         StatusLineControl.__init__(self, name)
 
-        self.label = StatusLineBlock(label)
+        self.caption = label
+        self.separator_width = 13
+
+        self.label = StatusLineBlock(self.caption)
         self.label.name = name
         self.label.instance = "label"
         self.label.separator = False
-        self.label.separator_block_width = 3
+        self.label.separator_block_width = self.separator_width
 
-        self.dec = StatusLineBlock("<span size='small'>❰</span>")
-        self.dec.markup = "pango"
+        self.dec = StatusLineBlock("❰")
+        #self.dec = StatusLineBlock("<span size='small'>❰</span>")
+        #self.dec.markup = "pango"
         self.dec.name = name
         self.dec.instance = "dec"
         self.dec.separator = False
-        self.dec.separator_block_width = 3
+        self.dec.separator_block_width = 0
 
         self.step = 1
 
@@ -31,24 +35,21 @@ class StatusLineSlider(StatusLineControl):
         self.lenght = 25
         self.slider = []
         for i in range(0, self.lenght + 1):
-            slider = StatusLineBlock("<span size='small'>•</span>")
-            slider.markup = "pango"
+            slider = StatusLineBlock("•")
+            #slider = StatusLineBlock("<span size='small'>•</span>")
+            #slider.markup = "pango"
             slider.name = name
             slider.instance = int(i * 100 / self.lenght)
             slider.separator = False
-            slider.separator_block_width = 3
+            slider.separator_block_width = 0
             self.slider.append(slider)
 
-        self.inc = StatusLineBlock("<span size='small'>❱</span>")
-        self.inc.markup = "pango"
+        self.inc = StatusLineBlock("❱ ")
+        #self.inc = StatusLineBlock("<span size='small'>❱</span>")
+        #self.inc.markup = "pango"
         self.inc.name = name
         self.inc.instance = "inc"
-
-        self.percent = StatusLineBlock("0%")
-        self.percent.name = name
-        self.percent.instance = "label"
-        self.percent.separator = True
-        self.percent.separator_block_width = 13
+        self.inc.separator_block_width = self.separator_width
 
     @property
     def color(self):
@@ -58,7 +59,21 @@ class StatusLineSlider(StatusLineControl):
     def color(self, color):
         if not self.label.color == color:
             self.label.color = color
-            self.percent.color = color
+            self.update()
+
+    @property
+    def border(self):
+        return self.label.border
+
+    @border.setter
+    def border(self, color):
+        if not self.label.border == color:
+            self.label.border = color
+            self.dec.border = color
+            for point in self.slider:
+                point.border = color
+            self.inc.border = color
+
             self.update()
 
     @property
@@ -86,7 +101,7 @@ class StatusLineSlider(StatusLineControl):
                     self.slider[i].color = None
                     i += 1
 
-            self.percent.full_text = "{0}%".format(self.value)
+            self.label.full_text = " {0}{1}% ".format(self.caption, self.value)
             self.update()
 
     def changeValue(self, value):
@@ -100,11 +115,12 @@ class StatusLineSlider(StatusLineControl):
         yield self.label
         if self.isActive:
             yield self.dec
+
+            Logger.logMessage(" {0} show slider".format(self.name))
+
             for point in self.slider:
                 yield point
             yield self.inc
-        else:
-            yield self.percent
 
     def doOnScrollDown(self, event):
         self.changeValue(self.value - self.step)
@@ -133,8 +149,12 @@ class StatusLineSlider(StatusLineControl):
     def doChangeValue(self, newValue):
         pass
 
-#    def doOnActivate(self):
+    def doOnActivate(self):
+        Logger.logMessage("Slider {0} expanded".format(self.name))
+        self.label.separator_block_width = 0
 #        self.label.separator = False
 
-#    def doOnDeactivate(self):
+    def doOnDeactivate(self):
+        Logger.logMessage("Slider {0} collapsed".format(self.name))
+        self.label.separator_block_width = self.separator_width
 #        self.label.separator = True

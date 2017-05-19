@@ -14,6 +14,8 @@ class StatusLineBrightness(StatusLineSlider):
 
         #self.step = 2
 
+        self.border = "#aec795"
+
         self.udevCtx = pyudev.Context()
         self.udevMon = pyudev.Monitor.from_netlink(self.udevCtx)
         self.udevMon.filter_by(subsystem='backlight')
