@@ -18,6 +18,7 @@ class StatusLineBattery(StatusLineControl):
         self.full.name = self.name
         
         self.short = StatusLineBlock("   ")
+       # self.short = StatusLineBlock(" 🔋 ")
         self.short.name = self.name
         
         self.udevCtx = pyudev.Context()

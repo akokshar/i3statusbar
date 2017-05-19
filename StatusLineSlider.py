@@ -13,8 +13,10 @@ class StatusLineSlider(StatusLineControl):
 
         self.caption = label
         self.separator_width = 13
+        self._value = 0
+        self.step = 1
 
-        self.label = StatusLineBlock(self.caption)
+        self.label = StatusLineBlock(self.getFormattedLable())
         self.label.name = name
         self.label.instance = "label"
         self.label.separator = False
@@ -27,10 +29,6 @@ class StatusLineSlider(StatusLineControl):
         self.dec.instance = "dec"
         self.dec.separator = False
         self.dec.separator_block_width = 0
-
-        self.step = 1
-
-        self._value = 0
 
         self.lenght = 25
         self.slider = []
@@ -101,8 +99,11 @@ class StatusLineSlider(StatusLineControl):
                     self.slider[i].color = None
                     i += 1
 
-            self.label.full_text = " {0}{1}% ".format(self.caption, self.value)
+            self.label.full_text = self.getFormattedLable()
             self.update()
+
+    def getFormattedLable(self):
+        return " {0}{1}% ".format(self.caption, self.value)
 
     def changeValue(self, value):
         oldValue = self.value
