@@ -15,6 +15,7 @@ class StatusLineAC(StatusLineControl):
         StatusLineControl.__init__(self, "AC")
 
         self.acLabel = StatusLineBlock("")
+        self.acLabel.separator = False
         
         self.udevCtx = pyudev.Context()
         self.udevMon = pyudev.Monitor.from_netlink(self.udevCtx)

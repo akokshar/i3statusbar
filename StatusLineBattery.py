@@ -16,10 +16,12 @@ class StatusLineBattery(StatusLineControl):
         
         self.full = StatusLineBlock("{0} --.--%".format(self.name))
         self.full.name = self.name
+        self.full.separator = False
         
         self.short = StatusLineBlock("   ")
-       # self.short = StatusLineBlock(" 🔋 ")
+        #self.short = StatusLineBlock(" 🔋 ")
         self.short.name = self.name
+        self.short.separator = False
         
         self.udevCtx = pyudev.Context()
         self.udevMon = pyudev.Monitor.from_netlink(self.udevCtx)

@@ -5,6 +5,28 @@ from StatusLineBlock import StatusLineBlock
 
 from ctypes import *
 
+#/usr/include/X11/X.h:#define ShiftMask		(1<<0)
+ShiftMask   = (1<<0)
+LockMask    = (1<<1)
+ControlMask = (1<<2)
+Mod1Mask    = (1<<3)
+Mod2Mask    = (1<<4)
+Mod3Mask    = (1<<5)
+Mod4Mask    = (1<<6)
+Mod5Mask    = (1<<7)
+
+#/usr/include/X11/extensions/XKB.h:#define	XkbUseCoreKbd		0x0100
+XkbUseCoreKbd = 0x0100
+
+#/usr/include/X11/extensions/XKB.h:#define	XkbStateNotify			2
+XkbStateNotify = 2
+
+#/usr/include/X11/extensions/XKB.h:#define	XkbGroupStateMask		(1L << 4)
+XkbGroupStateMask = (1<<4)
+
+#/usr/include/X11/extensions/XKB.h:#define	XkbModifierStateMask		(1L << 0)
+XkbModifierStateMask = (1<<0)
+
 _libX11=CDLL('libX11.so.6')
 
 class Display(Structure):
@@ -20,18 +42,6 @@ XkbOpenDisplay.argtypes = [
         POINTER(c_int), # minor_in_out
         POINTER(c_int)  # reason_rtrn
         ]
-
-#/usr/include/X11/extensions/XKB.h:#define	XkbUseCoreKbd		0x0100
-XkbUseCoreKbd = 0x0100
-
-#/usr/include/X11/extensions/XKB.h:#define	XkbStateNotify			2
-XkbStateNotify = 2
-
-#/usr/include/X11/extensions/XKB.h:#define	XkbGroupStateMask		(1L << 4)
-XkbGroupStateMask = (1<<4)
-
-#/usr/include/X11/extensions/XKB.h:#define	XkbModifierStateMask		(1L << 0)
-XkbModifierStateMask = (1<<0)
 
 XkbSelectEventDetails = _libX11.XkbSelectEventDetails
 XkbSelectEventDetails.restype = c_bool
@@ -111,8 +121,10 @@ class StatusLineLanguage(StatusLineControl):
         StatusLineControl.__init__(self, "lang")
         self.label = StatusLineBlock("--")
         self.label.name = self.name
+        self.label.align = "center"
+        self.label.border = "#CAD1DB"
 
-        self.indicators = ["en", "ru"]
+        self.indicators = [" en ", " ru "]
     
         self.xkbEventType = c_int(0)
         error = c_int(0)
@@ -133,9 +145,7 @@ class StatusLineLanguage(StatusLineControl):
         self.worker.start()
 
     def readXkbEvents(self):
-        """
-        Read an process XkbEvents. Will block forever.
-        """
+        """Read and process XkbEvents. Will block forever."""
         event = XkbEvent()
         while True:
             XNextEvent(self.display, event.core)
@@ -145,9 +155,9 @@ class StatusLineLanguage(StatusLineControl):
                 indicator = self.indicators[event.state.group]
                 
                 caps = False
-                if not ((event.state.mods & (1<<0)) == 0): #Shift
+                if not ((event.state.mods & ShiftMask) == 0):
                     caps = not caps
-                if not ((event.state.mods & (1<<1)) == 0): #CapsLock
+                if not ((event.state.mods & LockMask) == 0):
                     caps = not caps
 
                 if caps:
@@ -167,13 +177,17 @@ class StatusLineLanguage(StatusLineControl):
         pass
 
 if __name__ == "__main__":
-    control = StatusLineLanguage()
     
-    import json
-    for block in control.blocks:
-        print("{0}\n".format(json.dumps(block.getAttrs())))
+    control = StatusLineLanguage()
 
-    control.readXkbEvents()
+    def cbControlRefresh():
+        for block in control.blocks:
+            print("{0}\n".format(block.getAttrs()))
+
+    control.setRefreshCallback(cbControlRefresh)
+
+    while True:
+        input("type Ctrl-C to quit\n")
 
     exit(0)
 

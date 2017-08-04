@@ -10,7 +10,7 @@ from Logger import Logger
 from StatusLine import StatusLine
 from StatusLineLabel import StatusLineLabel 
 from StatusLineDatetime import StatusLineDatetime
-#from StatusLineLanguage import StatusLineLanguage
+from StatusLineLanguage import StatusLineLanguage
 from StatusLineBattery import StatusLineBattery
 from StatusLineAC import StatusLineAC
 from StatusLineCPU import StatusLineCPU
@@ -38,8 +38,8 @@ line.addControl(StatusLineBattery("BAT1"))
 line.addControl(StatusLineCapture())
 line.addControl(StatusLineVolume())
 line.addControl(StatusLineBrightness())
-#line.addControl(StatusLineLanguage())
 line.addControl(StatusLineDatetime())
+line.addControl(StatusLineLanguage())
 
 running = True
 

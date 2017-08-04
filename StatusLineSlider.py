@@ -12,7 +12,7 @@ class StatusLineSlider(StatusLineControl):
         StatusLineControl.__init__(self, name)
 
         self.caption = label
-        self.separator_width = 13
+        self.separator_width = 9
         self._value = 0
         self.step = 1
 
@@ -116,9 +116,7 @@ class StatusLineSlider(StatusLineControl):
         yield self.label
         if self.isActive:
             yield self.dec
-
-            Logger.logMessage(" {0} show slider".format(self.name))
-
+            # Logger.logMessage(" {0} show slider".format(self.name))
             for point in self.slider:
                 yield point
             yield self.inc
