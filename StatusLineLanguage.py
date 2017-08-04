@@ -135,8 +135,7 @@ class StatusLineLanguage(StatusLineControl):
             self.label.full_text = "Error (OpenDisplay)"
             return
 
-        select = XkbSelectEventDetails(self.display, XkbUseCoreKbd, XkbStateNotify, (XkbGroupStateMask|XkbModifierStateMask), (XkbGroupStateMask|XkbModifierStateMask))
-        if not select:
+        if not XkbSelectEventDetails(self.display, XkbUseCoreKbd, XkbStateNotify, (XkbGroupStateMask|XkbModifierStateMask), (XkbGroupStateMask|XkbModifierStateMask)):
             self.label.full_text = "Error (SelectEvent)"
             return
 
@@ -152,29 +151,22 @@ class StatusLineLanguage(StatusLineControl):
             if event.type == self.xkbEventType.value and event.any.xkb_type == XkbStateNotify:
                 if event.state.group >= len(self.indicators):
                     return
-                indicator = self.indicators[event.state.group]
                 
-                caps = False
-                if not ((event.state.mods & ShiftMask) == 0):
-                    caps = not caps
-                if not ((event.state.mods & LockMask) == 0):
+                caps = True if (event.state.mods & ShiftMask) else False
+                if (event.state.mods & LockMask):
                     caps = not caps
 
-                if caps:
-                    indicator = indicator.upper()
+                indicator = self.indicators[event.state.group].upper() if caps else self.indicators[event.state.group]
                 
                 if not self.label.full_text == indicator:
                     self.label.full_text = indicator
                     self.update()
 
-                    #print("Yay {0}, {1}".format(event.state.mods , self.label.full_text))
-
     @property
     def blocks(self):
         yield self.label
 
-    def doOnLeftClick(self, event):
-        pass
+
 
 if __name__ == "__main__":
     
