@@ -14,6 +14,7 @@ class StatusLineDatetime(StatusLineControl):
         self.updateInterval = 15
         self.label = StatusLineBlock("")
         self.label.border = "#CAD1DB"
+        self.label.separator = False
         self.scheduleUpdate(0)
   
     @property

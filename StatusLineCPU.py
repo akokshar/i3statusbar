@@ -16,6 +16,8 @@ class StatusLineCPU(StatusLineControl):
 
         self.cpuUsage = StatusLineBlock("  -----% ")
 
+        self.cpuUsage.separator = False
+
         self.scheduleUpdate(0)
   
     @property

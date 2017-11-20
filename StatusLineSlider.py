@@ -37,6 +37,7 @@ class StatusLineSlider(StatusLineControl):
             #slider = StatusLineBlock("<span size='small'>•</span>")
             #slider.markup = "pango"
             slider.name = name
+            slider.color = None
             slider.instance = int(i * 100 / self.lenght)
             slider.separator = False
             slider.separator_block_width = 0
@@ -47,7 +48,10 @@ class StatusLineSlider(StatusLineControl):
         #self.inc.markup = "pango"
         self.inc.name = name
         self.inc.instance = "inc"
+        self.inc.separator = False
         self.inc.separator_block_width = self.separator_width
+
+        self.value = 0
 
     @property
     def color(self):
@@ -92,7 +96,7 @@ class StatusLineSlider(StatusLineControl):
                 i = 0
                 if self.value > 0:
                     while i <= newIndex:
-                        self.slider[i].color = "red"
+                        self.slider[i].color = "#FF0000"
                         i += 1
 
                 while i <= self.lenght:

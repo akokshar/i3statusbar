@@ -7,4 +7,30 @@ Udev for: BAT0 self:BAT1
 Udev for: BAT1 self:BAT1
 do change for: BAT1 self:BAT1
 Pulse client init
-Pulse client init
+Udev for: BAT1 self:BAT1
+do change for: BAT1 self:BAT1
+Udev for: BAT1 self:BAT0
+Udev for: BAT0 self:BAT1
+Udev for: BAT0 self:BAT0
+do change for: BAT0 self:BAT0
+Slider capture expanded
+Udev for: BAT0 self:BAT1
+Udev for: BAT0 self:BAT0
+do change for: BAT0 self:BAT0
+Slider capture collapsed
+Slider capture expanded
+Slider capture collapsed
+Slider volume expanded
+Slider volume collapsed
+Slider capture expanded
+Slider capture collapsed
+Slider volume expanded
+Slider volume collapsed
+Slider backlight expanded
+Slider backlight collapsed
+Slider volume expanded
+Slider volume collapsed
+Slider backlight expanded
+Slider backlight collapsed
+Slider capture expanded
+Slider capture collapsed

@@ -18,6 +18,7 @@ class StatusLineMemory(StatusLineControl):
         self.memUsage.min_width = "MEM 9.99G/99.9G"
         self.memUsage.align = "center"
         self.memUsage.border = "#CAD1DB"
+        self.memUsage.separator = False
 
         self.scheduleUpdate(0)
   

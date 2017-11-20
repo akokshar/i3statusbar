@@ -128,11 +128,13 @@ class StatusLineBlock(object):
 
     @property
     def border(self):
-        return self.__getAttr("border")
+        #return self.__getAttr("border")
+        return self.__getAttr("color")
 
     @border.setter
     def border(self, value):
-        self.__setAttr("border", value)
+        #self.__setAttr("border", value)
+        self.__setAttr("color", value)
 
     @property
     def border_top(self):
